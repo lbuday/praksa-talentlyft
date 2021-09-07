@@ -3,7 +3,7 @@ import torch
 from utils import train_log
 from eval import validation_metrics
 
-def train_model(model, train_dl, val_dl, device, criterion, accuracy_metric, y_to_device, epochs=10, lr=0.1, print_every=1) -> None:
+def train_model(model, train_dl, val_dl, device, criterion, accuracy_metric, y_to_device, epochs=10, lr=0.1, print_every=1):
   """Funkcija koja trenira model
 
   Arguments:
@@ -26,7 +26,8 @@ def train_model(model, train_dl, val_dl, device, criterion, accuracy_metric, y_t
     print_every (`int`)=1:
       Nakon kojeg epocha radimo ispis
 
-  Returns: None"""
+  Returns: :torch.model
+  """
   loss_func = criterion
   wandb.watch(model)
 
@@ -73,4 +74,4 @@ def train_model(model, train_dl, val_dl, device, criterion, accuracy_metric, y_t
 
     if prev_main_loss_counter == 2:
         print("DONE")
-        return
+        return model

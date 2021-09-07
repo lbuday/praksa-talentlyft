@@ -3,8 +3,18 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
 class BertDataset:
-    """
-    Rijesava tokenizaciju i pretvara oznake u indekse
+    """Rijesava tokenizaciju i pretvara oznake u indekse
+
+    Arguments:
+        data (`Dict[str, list[str]]`):
+          Podatci koje koristimo podjeljeni na train i test,
+          koji su podjeljeni na X i y.
+        tokenizer (:transformers.tokenizer):
+          Tokenizator koji koristimo.
+        max_len (`int`):
+          maksimalna duljina ulaza.
+        tag2idx (`Dict[str,int]`):
+          mapiranje iz oznake u indeks.
     """
     def __init__(self, data, tokenizer, max_len, tag2idx):
 
@@ -53,9 +63,20 @@ class BertDataset:
 
 
 def tokenize_and_preserve_labels(sentence, text_labels, tokenizer):
-    """
-    Word piece tokenizacija otezava spajanje rijeci sa njihovim oznakama,
+    """Word piece tokenizacija otezava spajanje rijeci sa njihovim oznakama,
     ovom funkcijom odzavamo oznake sa pripadajucim rijecima i podrijecima
+
+    Arguments:
+        sentence (`List[str]`):
+          recenica koju tokeniziramo.
+        text_labels (`List[str]`):
+          oznake na danoj recenici.
+        tokenizer (:transformers.tokenizer):
+          Tokenizator koji koristimo.
+
+    Returns:
+        `List[int]`: tokenizirana recenica,
+        `List[str]`: oznake prosirene na podrijeci.
     """
     tokenized_sentence = []
     labels = []
@@ -76,6 +97,25 @@ def tokenize_and_preserve_labels(sentence, text_labels, tokenizer):
 
 
 def load_and_prepare_data(data, tokenizer, max_len, batch_size, tag2idx):
+    """Pravi DataLoadere od podataka
+
+    Arguments:
+        data (`Dict[str, list[str]]`):
+          Podatci koje koristimo podjeljeni na train i test,
+          koji su podjeljeni na X i y.
+        tokenizer (:transformers.tokenizer):
+          Tokenizator koji koristimo.
+        max_len (`int`):
+          maksimalna duljina ulaza.
+        batch_size (`int`):
+          velicina batcha.
+        tag2idx (`Dict[str,int]`):
+          mapiranje iz oznake u indeks.
+
+    Returns:
+        :obj:`torch.utils.data.dataloader.DataLoader`: dataloader za trening podatke,
+        :obj:`torch.utils.data.dataloader.DataLoader`: dataloader za test podatke.
+    """
 
     train = BertDataset(data["train"], tokenizer, max_len, tag2idx)
     dev = BertDataset(data["test"], tokenizer, max_len, tag2idx)

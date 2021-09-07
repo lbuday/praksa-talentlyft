@@ -63,7 +63,7 @@ class JobTypeDataset(Dataset):
     self.texts = X
     self.labels = y
     self.n_examples = len(self.labels)
-    return
+    return None
 
   def __len__(self):
     return self.n_examples

@@ -10,13 +10,44 @@ def train_and_save_model(
     optimizer,
     idx2tag,
     tag2idx,
-    this_run,
     max_grad_norm,
     device,
     train_dataloader,
     valid_dataloader,
 ):
-    """Trenira i sprema model"""
+    """Trenira i sprema model
+
+    Arguments:
+        model (:transformers.Model):
+            model koji treniramo
+
+        tokenizer (:transformers.Tokenizer):
+            tokenizer kojim tokeniziramo input
+
+        optimizer (:obj:`transformers.optimization.AdamW`):
+            optimizator kojim optimiziramo model
+
+        idx2tag (`Dict[int, str]`):
+            mapiranje sa indeksa u oznaku
+        
+        tag2idx (`Dict[str, int]`):
+            mapiranje sa oznake u indeks
+
+        max_grad_norm (`float`):
+            maksimalna norma gradijenta(za podrezivanje)
+
+        device (:obj:`torch.device`):
+            Uredaj na kojem treniramo model.
+        
+        train_dataloader (:obj:`torch.utils.data.dataloader.DataLoader`):
+            Parsirani podatci u batcheve tenzora(za train).
+
+        valid_dataloader (:obj:`torch.utils.data.dataloader.DataLoader`):
+            Parsirani podatci u batcheve tenzora(za validaciju).   
+
+    Returns:
+      None
+    """
 
     print("start of training")
     pad_tok, sep_tok, cls_tok, o_lab = get_special_tokens(tokenizer, tag2idx)
@@ -178,4 +209,4 @@ def train_and_save_model(
 
         if prev_main_loss_counter == 2:
             print("DONE")
-            return
+            return None

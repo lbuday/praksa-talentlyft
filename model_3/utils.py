@@ -12,10 +12,19 @@ import torch
 from transformers import AutoModel, AutoTokenizer, AutoModelForTokenClassification, AutoConfig
 
 def annot_confusion_matrix(valid_tags, pred_tags):
+    """Stvori oznacenu matricu zbunjenosti formatiranjem 
+    slearnsove `confusion_matrix`.
 
-    """
-    Create an annotated confusion matrix by adding label
-    annotations and formatting to sklearn's `confusion_matrix`.
+    Arguments:
+
+        valid_tags (:torch.Tensor):
+            Oznake iz DataLoadera
+
+        pred_tags (:torch.Tensor):
+            Oznake dobijene predikcijom modela
+
+    Returns:
+      (`str`): oznacena matrica zbunjenosti u obliku stringa
     """
 
     # Create header from unique tags
@@ -32,6 +41,17 @@ def annot_confusion_matrix(valid_tags, pred_tags):
 
 def flat_accuracy(valid_tags, pred_tags):
     """Preciznost koju koristimo tokom treniranja
+    
+    Arguments:
+
+        valid_tags (:torch.Tensor):
+            Oznake iz DataLoadera
+
+        pred_tags (:torch.Tensor):
+            Oznake dobijene predikcijom modela
+
+    Returns:
+      (`float`): Vrijednost preciznosti
     """
     try:
       out = (np.array(valid_tags) == np.array(pred_tags)).mean()
@@ -44,7 +64,7 @@ def flat_accuracy(valid_tags, pred_tags):
     return out
 
 def get_special_tokens(tokenizer, tag2idx):
-
+    """Vraca posebne tokene, [PAD], [SEP], [CLS] i O oznaku"""
     pad_tok = tokenizer.vocab["[PAD]"]
     sep_tok = tokenizer.vocab["[SEP]"]
     cls_tok = tokenizer.vocab["[CLS]"]
@@ -53,8 +73,22 @@ def get_special_tokens(tokenizer, tag2idx):
     return pad_tok, sep_tok, cls_tok, o_lab
 
 def get_hyperparameters(model, ff):
+    """Vraca parametre modela
+    
+    Arguments:
+
+        valid_tags (:torch.Tensor):
+            Oznake iz DataLoadera
+
+        pred_tags (:torch.Tensor):
+            Oznake dobijene predikcijom modela
+
+    Returns:
+      (`str`): oznacena matrica zbunjenosti u obliku stringa
+    """
 
     # ff: full_finetuning
+    #Odvaja parametre sa decayom i bez te ih grupira sa vrijednosti decaya
     if ff:
         param_optimizer = list(model.named_parameters())
         no_decay = ["bias", "gamma", "beta"]

@@ -85,7 +85,6 @@ if __name__ == "__main__":
     BATCH_SIZE = 2
     EPOCHS = 8
     MODEL = 'pucpr/clinicalnerpt-quantitative'
-    THIS_RUN = dt.datetime.now().strftime("%m.%d.%Y, %H.%M.%S")
     MAX_GRAD_NORM = 1.0
     NUM_LABELS = len(label_types)
     FULL_FINETUNING = True
@@ -125,7 +124,6 @@ if __name__ == "__main__":
         optimizer,
         idx2tag,
         tag2idx,
-        THIS_RUN,
         MAX_GRAD_NORM,
         device,
         train_dataloader,
