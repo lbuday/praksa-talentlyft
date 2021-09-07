@@ -1,0 +1,24 @@
+{
+    "os": "Linux-5.4.0-80-generic-x86_64-with-glibc2.27",
+    "python": "3.9.6",
+    "heartbeatAt": "2021-08-30T18:25:39.376443",
+    "startedAt": "2021-08-30T18:25:38.573031",
+    "docker": null,
+    "gpu": "GeForce RTX 2070",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/home/mluser/lovro_praksa/model_1/main.py",
+    "codePath": "model_1/main.py",
+    "git": {
+        "remote": "https://github.com/lbuday/praksa-talentlyft.git",
+        "commit": "79030f0d923cceee5b1a063c43cd0a76124c89e3"
+    },
+    "email": "ivan.zidov@talentlyft.com",
+    "root": "/home/mluser/lovro_praksa",
+    "host": "talentlyft-ml",
+    "username": "mluser",
+    "executable": "/home/mluser/miniconda3/envs/lovro/bin/python"
+}
